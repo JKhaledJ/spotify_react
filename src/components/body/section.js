@@ -1,91 +1,99 @@
 import React, { useEffect, useState } from "react";
 import Slider from "../shared/slider/Slider";
+import Carousel from "../shared/slider/Carousel";
+import SliderElement from "../shared/slider/SliderElement";
+import "../shared/slider/styles.css";
 
 export default function Section({ title }) {
   var resources = [
     {
       title: "Find me on Twitter",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/any",
+      imageUrl: "images/sliderImages/1.jpg",
     },
     {
       title: "Welcome to Ark Labs",
       link: "https://ark-labs.co.uk",
-      imageUrl: "https://placeimg.com/300/300/animals",
+      imageUrl: "images/sliderImages/2.jpg",
     },
     {
       title: "Some sort of third title",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/architecture",
+      imageUrl: "images/sliderImages/3.jpg",
     },
     {
-      title: "Super item number the last",
+      title: "Great to see you",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
+      imageUrl: "images/sliderImages/1.jpg",
     },
     {
-      title: "Super item number the last",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
-    },
-    {
-      title: "Super item number the last",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
-    },
-    {
-      title: "Super item number the last",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
-    },
-    {
-      title: "Super item number the last",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
-    },
-    {
-      title: "Find me on Twitter",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/any",
-    },
-    {
-      title: "Welcome to Ark Labs",
+      title: "Hi baby",
       link: "https://ark-labs.co.uk",
-      imageUrl: "https://placeimg.com/300/300/animals",
+      imageUrl: "images/sliderImages/2.jpg",
     },
     {
-      title: "Some sort of third title",
+      title: "Some things",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/architecture",
+      imageUrl: "images/sliderImages/3.jpg",
     },
     {
-      title: "Super item number the last",
+      title: "Nice place",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
+      imageUrl: "images/sliderImages/1.jpg",
     },
     {
-      title: "Super item number the last",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
+      title: "Great job",
+      link: "https://ark-labs.co.uk",
+      imageUrl: "images/sliderImages/2.jpg",
     },
     {
-      title: "Super item number the last",
+      title: "Just a sample",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
+      imageUrl: "images/sliderImages/3.jpg",
     },
     {
-      title: "Super item number the last",
+      title: "Nice place",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
+      imageUrl: "images/sliderImages/1.jpg",
     },
     {
-      title: "Super item number the last",
+      title: "Great job",
+      link: "https://ark-labs.co.uk",
+      imageUrl: "images/sliderImages/2.jpg",
+    },
+    {
+      title: "Just a sample",
       link: "https://twitter.com/kendalmintcode",
-      imageUrl: "https://placeimg.com/300/300/tech",
+      imageUrl: "images/sliderImages/3.jpg",
+    },
+    {
+      title: "Just a sample",
+      link: "https://twitter.com/kendalmintcode",
+      imageUrl: "images/sliderImages/3.jpg",
+    },
+    {
+      title: "Just a sample",
+      link: "https://twitter.com/kendalmintcode",
+      imageUrl: "images/sliderImages/3.jpg",
+    },
+    {
+      title: "Just a sample",
+      link: "https://twitter.com/kendalmintcode",
+      imageUrl: "images/sliderImages/3.jpg",
     },
   ];
   
-  
+  const setting = {
+    dragSpeed: 1,
+    itemWidth: 100,
+    itemHeight: 130,
+    itemSideOffsets: 15,
+  }
+  const itemStyle = {
+    width: `${setting.itemWidth}px`,
+    height: `${setting.itemHeight}px`,
+    margin: `0px ${setting.itemSideOffsets}px`
+  }
   const [sliderState, setSliderState] = useState({
     endSlide: 12,
     beginSlide: 0,
@@ -152,8 +160,14 @@ export default function Section({ title }) {
           <img src="../images/icons/right-arrow.png" width={10} />
         </button>
       </div>
-      <div className="h-64 mt-6 overflow-hidden">
-        <Slider sliderState={sliderState} resources={sliderState.displayingResources} />
+      <div className="mt-6 flex gap-2">
+        <Carousel _data={resources} {...setting}>
+          {
+            resources.map((value, index) => (
+               <SliderElement src={value.imageUrl} title={value.title} key={index} style={itemStyle} />
+            ))
+          }
+        </Carousel>
       </div>
     </div>
   );

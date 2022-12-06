@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function SliderElement({ src, title, key }) {
+export default function SliderElement({ src, title, style }) {
   return (
-    <div className="w-18">
-      <img key={key} src={src} className={`w-full h-18  rounded-md`}/>
+    <div className="item flex-col" style={{...style}}>
+      <img src={src} className={`rounded-md h-24`}/>
       <div className="flex-col text-center text-xs">
         <p>{title}</p>
       </div>
