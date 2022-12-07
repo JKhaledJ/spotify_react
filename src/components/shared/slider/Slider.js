@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from "react";
 import SliderElement from "./SliderElement";
-
-export default function Slider({sliderState, resources}) {
- 
+import Carousel from "./Carousel";
+export default function Slider({ resources }) {
+  const setting = {
+    dragSpeed: 1,
+    itemWidth: 100,
+    itemHeight: 130,
+    itemSideOffsets: 15,
+  };
+  const itemStyle = {
+    width: `${setting.itemWidth}px`,
+    height: `${setting.itemHeight}px`,
+    margin: `0px ${setting.itemSideOffsets}px`,
+  };
   return (
-    <div className="flex justify-start gap-3">
-      {resources.map((slide, index) => {
-        return <SliderElement src={slide.imageUrl} title={slide.title} key={index} />;
-      })}
-    </div>
+    <Carousel _data={resources} {...setting}>
+      {resources.map((value, index) => (
+        <SliderElement
+          src={value.imageUrl}
+          title={value.title}
+          key={index}
+          style={itemStyle}
+        />
+      ))}
+    </Carousel>
   );
 }

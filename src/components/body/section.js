@@ -83,17 +83,7 @@ export default function Section({ title }) {
     },
   ];
   
-  const setting = {
-    dragSpeed: 1,
-    itemWidth: 100,
-    itemHeight: 130,
-    itemSideOffsets: 15,
-  }
-  const itemStyle = {
-    width: `${setting.itemWidth}px`,
-    height: `${setting.itemHeight}px`,
-    margin: `0px ${setting.itemSideOffsets}px`
-  }
+  
   const [sliderState, setSliderState] = useState({
     endSlide: 12,
     beginSlide: 0,
@@ -161,13 +151,7 @@ export default function Section({ title }) {
         </button>
       </div>
       <div className="mt-6 flex gap-2">
-        <Carousel _data={resources} {...setting}>
-          {
-            resources.map((value, index) => (
-               <SliderElement src={value.imageUrl} title={value.title} key={index} style={itemStyle} />
-            ))
-          }
-        </Carousel>
+        <Slider resources={resources} />
       </div>
     </div>
   );
