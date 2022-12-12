@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SliderElement from "./SliderElement";
 import Carousel from "./Carousel";
 export default function Slider({ resources }) {

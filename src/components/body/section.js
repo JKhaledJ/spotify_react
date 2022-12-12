@@ -1,8 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { useContext } from "react";
 import Slider from "../shared/slider/Slider";
 import "../shared/slider/styles.css";
-
-export const SliderContext = createContext();
+import { SliderContext } from "../../contexts/SliderContexts";
 
 export default function Section({ title }) {
   var resources = [
@@ -88,18 +87,15 @@ export default function Section({ title }) {
     itemHeight: 130,
     itemSideOffsets: 15,
   };
-  const [sliderState, setSliderState] = useState(0);
+
+  const {sliderTranslateX, setSliderTranslateXContext} = useContext(SliderContext);
   function nextSlide() {
     const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - 1256;
-    if(sliderState<end) setSliderState(sliderState + 50);
+    if(sliderTranslateX < end) setSliderTranslateXContext(sliderTranslateX + 50);
   }
 
-  function prevSlide(){
-    if(sliderState>0) setSliderState(sliderState - 50);
-  }
-
-  function setSliderContext(val){
-    setSliderState(val)
+  function prevSlide() {
+    if(sliderTranslateX>0) setSliderTranslateXContext(sliderTranslateX - 50);
   }
 
   return (
@@ -109,16 +105,22 @@ export default function Section({ title }) {
         <div className="grow border-b-2 border-gray-200 mx-4"> </div>
 
         <button className="p-1" onClick={prevSlide}>
-          <img src="../images/icons/left-arrow.png" width={10} />
+          <img
+            src="../images/icons/left-arrow.png"
+            width={10}
+            alt="left arrow"
+          />
         </button>
         <button className="p-1" onClick={nextSlide}>
-          <img src="../images/icons/right-arrow.png" width={10} />
+          <img
+            src="../images/icons/right-arrow.png"
+            width={10}
+            alt="right arrow"
+          />
         </button>
       </div>
       <div className="mt-6 flex gap-2">
-        <SliderContext.Provider value={{sliderState:sliderState,setSliderContext:setSliderContext}}>
-          <Slider resources={resources} />
-        </SliderContext.Provider>
+        <Slider resources={resources} />
       </div>
     </div>
   );

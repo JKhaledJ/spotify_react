@@ -5,7 +5,7 @@ export default function Header() {
     <div className="h-24 rounded-tr-xl bg-[#ffb5a7] overflow-hidden flex justify-between items-center">
       <div>
         <img
-          src="../images/Header.png"
+          src="../images/Header.png" alt="header"
           className="w-80 h-32 object-cover -translate-x-4 transform -scale-x-100"
         />
       </div>
