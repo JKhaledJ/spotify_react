@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { SliderContext } from "../../body/Section";
 import "./styles.css";
-
 
 export default function Carousel(props) {
   const [carouselState, setCarouselState] = useState({
@@ -9,9 +9,9 @@ export default function Carousel(props) {
     transLeftOffset: null,
     dragSpeed: props.dragSpeed,
   });
-  const [transformData, setTransformData] = useState("translateX(0px)");
+  const sliderContext = useContext(SliderContext);
   const cRef = useRef();
-  
+
 // mouse Down
 function handleMouseDown(e) {
   const carousel = cRef.current;
@@ -60,7 +60,7 @@ function handleMouseMove(e) {
 
   const x = e.pageX - carousel.offsetLeft;
   const walk = (x - startX) * props.dragSpeed;
-  setTransformData(`translateX(${transLeftOffset + walk}px)`);
+  sliderContext.setSliderContext(transLeftOffset + walk);
 }
 
 // handle Snap To Sides
@@ -75,7 +75,7 @@ function handleSnap() {
 
   // handeling Threshold
   // (1) getting transValue
-  const tempThresholdOffset = giveMeIntValOf(transformData);
+  const tempThresholdOffset = giveMeIntValOf(`translateX(${sliderContext.sliderState}px)`);
   // (2) items width - 30(first & last item removed margins) - containerWidth(b/c of ending part)
   const end = _data.length * (itemWidth + 2 * itemSideOffsets) - 30 - carousel.offsetWidth;
   // (3) check if we passing from threshold ( handeling Snap To Sides )
@@ -85,7 +85,9 @@ function handleSnap() {
         transform: translateX(${tempThresholdOffset < 0 ? 0 : end}px);
         transition: transform 0.5s cubic-bezier(.25,.72,.51,.96);
       `;
-  }
+    }
+    if(sliderContext.sliderState < 0) sliderContext.setSliderContext(0);
+    if(sliderContext.sliderState > end) sliderContext.setSliderContext(end);
 }
 
 // helper Function
@@ -113,7 +115,7 @@ const giveMeIntValOf = (el) => {
         className="cWrapper"
         style={{
           ...cWrapperStyle,
-          transform: transformData,
+          transform: `translateX(${sliderContext.sliderState}px)`,
         }}
       >
         {props.children}

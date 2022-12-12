@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import Slider from "../shared/slider/Slider";
-import Carousel from "../shared/slider/Carousel";
-import SliderElement from "../shared/slider/SliderElement";
 import "../shared/slider/styles.css";
+
+export const SliderContext = createContext();
 
 export default function Section({ title }) {
   var resources = [
@@ -82,61 +82,26 @@ export default function Section({ title }) {
       imageUrl: "images/sliderImages/3.jpg",
     },
   ];
-  
-  
-  const [sliderState, setSliderState] = useState({
-    endSlide: 12,
-    beginSlide: 0,
-    displayingResources : [],
-  });
-  useEffect(() => {
-    var displayingArray = [];
-    for (let index = sliderState.beginSlide;index < sliderState.endSlide;index++) {
-      displayingArray[index] = resources[index];
-    }
-    setSliderState({...sliderState, displayingResources : displayingArray})
-    // console.log(resources)
-    // console.log(sliderState)
-
-  }, []);
-
+  const setting = {
+    dragSpeed: 1,
+    itemWidth: 100,
+    itemHeight: 130,
+    itemSideOffsets: 15,
+  };
+  const [sliderState, setSliderState] = useState(0);
   function nextSlide() {
-    var item = {
-      endSlide : 12,
-      beginSlide: 0,
-      displayingResources: []
-    };
-    if (sliderState.endSlide === resources.length - 1) {
-      item.endSlide = 12;
-      item.beginSlide = 0;
-    } else {
-      item.endSlide = sliderState.endSlide+1;
-      item.beginSlide = sliderState.beginSlide+1;
-    }
-    for (let index = item.beginSlide;index < item.endSlide;index++) {
-      item.displayingResources[index] = resources[index];
-    }
-    setSliderState(item);
+    const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - 1256;
+    if(sliderState<end) setSliderState(sliderState + 50);
   }
 
-  function prevSlide() {
-    var item = {
-      endSlide : 12,
-      beginSlide: 0,
-      displayingResources: []
-    };
-    if (sliderState.beginSlide === 0) {
-      item.endSlide = 12;
-      item.beginSlide = 0;
-    } else {
-      item.endSlide = sliderState.endSlide-1;
-      item.beginSlide = sliderState.beginSlide-1;
-    }
-    for (let index = item.beginSlide;index < item.endSlide;index++) {
-      item.displayingResources[index] = resources[index];
-    }
-    setSliderState(item);
+  function prevSlide(){
+    if(sliderState>0) setSliderState(sliderState - 50);
   }
+
+  function setSliderContext(val){
+    setSliderState(val)
+  }
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -151,7 +116,9 @@ export default function Section({ title }) {
         </button>
       </div>
       <div className="mt-6 flex gap-2">
-        <Slider resources={resources} />
+        <SliderContext.Provider value={{sliderState:sliderState,setSliderContext:setSliderContext}}>
+          <Slider resources={resources} />
+        </SliderContext.Provider>
       </div>
     </div>
   );
