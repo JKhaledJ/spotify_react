@@ -1,13 +1,7 @@
 import React from "react";
 import SliderElement from "./SliderElement";
 import Carousel from "./Carousel";
-export default function Slider({ resources }) {
-  const setting = {
-    dragSpeed: 1,
-    itemWidth: 100,
-    itemHeight: 130,
-    itemSideOffsets: 15,
-  };
+export default function Slider({ resources, setting }) {
   const itemStyle = {
     width: `${setting.itemWidth}px`,
     height: `${setting.itemHeight}px`,

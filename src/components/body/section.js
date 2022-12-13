@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import Slider from "../shared/slider/Slider";
 import "../shared/slider/styles.css";
 import { SliderContext } from "../../contexts/SliderContexts";
@@ -81,6 +81,7 @@ export default function Section({ title }) {
       imageUrl: "images/sliderImages/3.jpg",
     },
   ];
+  const cRef = useRef();
   const setting = {
     dragSpeed: 1,
     itemWidth: 100,
@@ -90,12 +91,13 @@ export default function Section({ title }) {
 
   const {sliderTranslateX, setSliderTranslateXContext} = useContext(SliderContext);
   function nextSlide() {
-    const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - 1256;
-    if(sliderTranslateX < end) setSliderTranslateXContext(sliderTranslateX + 50);
+    const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
+    if(sliderTranslateX < end) setSliderTranslateXContext(sliderTranslateX + end/5);
   }
 
   function prevSlide() {
-    if(sliderTranslateX>0) setSliderTranslateXContext(sliderTranslateX - 50);
+    const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
+    if(sliderTranslateX>0) setSliderTranslateXContext(sliderTranslateX - end/5);
   }
 
   return (
@@ -119,8 +121,8 @@ export default function Section({ title }) {
           />
         </button>
       </div>
-      <div className="mt-6 flex gap-2">
-        <Slider resources={resources} />
+      <div className="mt-6 flex gap-2" ref={cRef}>
+        <Slider resources={resources} setting={setting} />
       </div>
     </div>
   );
