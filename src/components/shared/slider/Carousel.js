@@ -99,6 +99,7 @@ const giveMeIntValOf = (el) => {
   const cWrapperStyle = {
     width: `${_data.length * (itemWidth + 2 * itemSideOffsets)}px`,
     height: `${itemHeight}px`,
+    transition: 'transform 0.5s cubic-bezier(0.25, 0.72, 0.51, 0.96) 0s'
   };
 
   return (

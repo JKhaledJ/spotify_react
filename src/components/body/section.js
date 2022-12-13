@@ -90,12 +90,12 @@ export default function Section({ title }) {
   };
 
   const {sliderTranslateX, setSliderTranslateXContext} = useContext(SliderContext);
-  function nextSlide() {
+  function prevSlide() {
     const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
     if(sliderTranslateX < end) setSliderTranslateXContext(sliderTranslateX + end/5);
   }
 
-  function prevSlide() {
+  function nextSlide() {
     const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
     if(sliderTranslateX>0) setSliderTranslateXContext(sliderTranslateX - end/5);
   }
