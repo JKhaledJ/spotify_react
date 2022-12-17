@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { SliderContext } from "../../../contexts/SliderContexts";
+import { SliderContext } from "../../body/Section";
 import "./styles.css";
 
 export default function Carousel(props) {
@@ -11,7 +11,7 @@ export default function Carousel(props) {
   });
   const {
     sliderTranslateX,
-    setSliderTranslateXContext
+    setSliderTranslateX
   } = useContext(SliderContext);
   const cRef = useRef();
 
@@ -62,7 +62,7 @@ function handleMouseMove(e) {
 
   const x = e.pageX - carousel.offsetLeft;
   const walk = (x - startX) * props.dragSpeed;
-  setSliderTranslateXContext(transLeftOffset + walk);
+  setSliderTranslateX(transLeftOffset + walk);
 }
 
 // handle Snap To Sides
@@ -88,8 +88,8 @@ function handleSnap() {
         transition: transform 0.5s cubic-bezier(.25,.72,.51,.96);
       `;
     }
-    if(sliderTranslateX < 0) setSliderTranslateXContext(0);
-    if(sliderTranslateX > end) setSliderTranslateXContext(end);
+    if(sliderTranslateX < 0) setSliderTranslateX(0);
+    if(sliderTranslateX > end) setSliderTranslateX(end);
 }
 
 // helper Function

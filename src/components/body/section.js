@@ -1,86 +1,10 @@
-import React, { useContext, useRef } from "react";
+import React, { createContext, useRef, useState } from "react";
 import Slider from "../shared/slider/Slider";
 import "../shared/slider/styles.css";
-import { SliderContext } from "../../contexts/SliderContexts";
 
-export default function Section({ title }) {
-  var resources = [
-    {
-      title: "Find me on Twitter",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/1.jpg",
-    },
-    {
-      title: "Welcome to Ark Labs",
-      link: "https://ark-labs.co.uk",
-      imageUrl: "images/sliderImages/2.jpg",
-    },
-    {
-      title: "Some sort of third title",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-    {
-      title: "Great to see you",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/1.jpg",
-    },
-    {
-      title: "Hi baby",
-      link: "https://ark-labs.co.uk",
-      imageUrl: "images/sliderImages/2.jpg",
-    },
-    {
-      title: "Some things",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-    {
-      title: "Nice place",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/1.jpg",
-    },
-    {
-      title: "Great job",
-      link: "https://ark-labs.co.uk",
-      imageUrl: "images/sliderImages/2.jpg",
-    },
-    {
-      title: "Just a sample",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-    {
-      title: "Nice place",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/1.jpg",
-    },
-    {
-      title: "Great job",
-      link: "https://ark-labs.co.uk",
-      imageUrl: "images/sliderImages/2.jpg",
-    },
-    {
-      title: "Just a sample",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-    {
-      title: "Just a sample",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-    {
-      title: "Just a sample",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-    {
-      title: "Just a sample",
-      link: "https://twitter.com/kendalmintcode",
-      imageUrl: "images/sliderImages/3.jpg",
-    },
-  ];
+export const SliderContext = createContext();
+export default function Section({ title, resources }) {
+  const [sliderTranslateX, setSliderTranslateX] = useState(0);
   const cRef = useRef();
   const setting = {
     dragSpeed: 1,
@@ -89,15 +13,14 @@ export default function Section({ title }) {
     itemSideOffsets: 15,
   };
 
-  const {sliderTranslateX, setSliderTranslateXContext} = useContext(SliderContext);
   function prevSlide() {
     const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
     const slideSize = end / 5;
     var tempSlideSize = sliderTranslateX + slideSize;
     if(tempSlideSize >= end)
-      setSliderTranslateXContext(end);
+    setSliderTranslateX(end);
     else
-      setSliderTranslateXContext(tempSlideSize);
+    setSliderTranslateX(tempSlideSize);
   }
 
   function nextSlide() {
@@ -105,10 +28,10 @@ export default function Section({ title }) {
     const slideSize = end / 5;
     var tempSlideSize = sliderTranslateX - slideSize;
     if (tempSlideSize < 0) {
-      setSliderTranslateXContext(0);
+      setSliderTranslateX(0);
     }
     else{
-      setSliderTranslateXContext(tempSlideSize);
+      setSliderTranslateX(tempSlideSize);
     }
   }
 
@@ -134,7 +57,14 @@ export default function Section({ title }) {
         </button>
       </div>
       <div className="mt-6 flex gap-2" ref={cRef}>
-        <Slider resources={resources} setting={setting} />
+      <SliderContext.Provider
+          value={{
+              sliderTranslateX: sliderTranslateX,
+              setSliderTranslateX: setSliderTranslateX,
+          }}
+        >
+          <Slider resources={resources} setting={setting} />
+        </SliderContext.Provider>
       </div>
     </div>
   );
