@@ -9,7 +9,10 @@ export default function Carousel(props) {
     transLeftOffset: null,
     dragSpeed: props.dragSpeed,
   });
-  const {sliderTranslateX, setSliderTranslateXContext} = useContext(SliderContext);
+  const {
+    sliderTranslateX,
+    setSliderTranslateXContext
+  } = useContext(SliderContext);
   const cRef = useRef();
 
 // mouse Down
@@ -35,7 +38,7 @@ function handleMouseDown(e) {
 
   carousel.firstChild.style.cssText = `
         transform: translateX(${_transLeftOffset + walk}px);
-        transition: transform 0.0s ease-in-out;
+        transition: transform 0.5s cubic-bezier(.25,.72,.51,.96);
       `;
 }
 

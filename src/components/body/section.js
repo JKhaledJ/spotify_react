@@ -92,12 +92,24 @@ export default function Section({ title }) {
   const {sliderTranslateX, setSliderTranslateXContext} = useContext(SliderContext);
   function prevSlide() {
     const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
-    if(sliderTranslateX < end) setSliderTranslateXContext(sliderTranslateX + end/5);
+    const slideSize = end / 5;
+    var tempSlideSize = sliderTranslateX + slideSize;
+    if(tempSlideSize >= end)
+      setSliderTranslateXContext(end);
+    else
+      setSliderTranslateXContext(tempSlideSize);
   }
 
   function nextSlide() {
     const end = resources.length * (setting.itemWidth + 2 * setting.itemSideOffsets) - 30 - cRef.current.offsetWidth;
-    if(sliderTranslateX>0) setSliderTranslateXContext(sliderTranslateX - end/5);
+    const slideSize = end / 5;
+    var tempSlideSize = sliderTranslateX - slideSize;
+    if (tempSlideSize < 0) {
+      setSliderTranslateXContext(0);
+    }
+    else{
+      setSliderTranslateXContext(tempSlideSize);
+    }
   }
 
   return (
