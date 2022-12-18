@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./header/Header";
+import Player from "./player/Player";
 import Section from "./Section";
 export default function Body() {
   var resources = [
@@ -84,9 +85,10 @@ export default function Body() {
       <Header />
       <div className="max-h-screen overflow-y-scroll px-14 mt-7">
         <Section title="New Released" resources = {resources} />
-        <Section title="Featured playlist"  resources = {resources}/>
-        <Section title="Browse" resources = {resources}/>
+        <Section title="Featured playlist"  resources = {resources} />
+        <Section title="Browse" resources = {resources} />
       </div>
+      <Player />
     </div>
   );
 }

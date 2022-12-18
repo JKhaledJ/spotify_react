@@ -36,7 +36,7 @@ export default function Section({ title, resources }) {
   }
 
   return (
-    <div>
+    <div className="h-64">
       <div className="flex items-center justify-between">
         <h1 className="text-gray-300 font-bold uppercase">{title}</h1>
         <div className="grow border-b-2 border-gray-200 mx-4"> </div>

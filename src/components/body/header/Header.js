@@ -2,7 +2,7 @@ import React from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 export default function Header() {
   return (
-    <div className="h-24 rounded-tr-xl bg-[#ffb5a7] overflow-hidden flex justify-between items-center">
+    <div className="h-36 rounded-tr-xl bg-[#ffb5a7] overflow-hidden flex justify-between items-center">
       <div>
         <img
           src="../images/Header.png" alt="header"
